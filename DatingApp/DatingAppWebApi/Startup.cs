@@ -1,4 +1,5 @@
 using DatingAppRepository;
+using DatingAppServices;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -21,10 +22,14 @@ namespace DatingAppWebApi
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
+
+            // Database Configuration
             var connectionString = Configuration.GetConnectionString("DbConnection");
             services.AddDbContext<DatingAppDbContext>(options => options.UseSqlServer(connectionString));
 
-           
+            // Dependency Injection 
+            services.AddDatingAppRepository();
+            services.AddDatingAppServices();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
